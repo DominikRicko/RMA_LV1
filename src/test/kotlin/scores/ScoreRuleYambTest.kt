@@ -24,7 +24,7 @@ internal class ScoreRuleYambTest{
     }
 
     @Test
-    fun testYambGetScoreFromDicesWithSameSide(){
+    fun testSameSide(){
 
         this.dices.forEach{
             it.side = 1
@@ -37,7 +37,7 @@ internal class ScoreRuleYambTest{
     }
 
     @Test
-    fun testYambGetScoreFromDicesWithOneFiveCombination(){
+    fun testOneFiveCombination(){
 
         for (i in 0..4)
             this.dices[i].side = 5
@@ -51,7 +51,7 @@ internal class ScoreRuleYambTest{
     }
 
     @Test
-    fun testYambGetScoreFromDicesWithTwoFourCombination(){
+    fun testTwoFourCombination(){
 
         for (i in 0..3)
             this.dices[i].side = 5

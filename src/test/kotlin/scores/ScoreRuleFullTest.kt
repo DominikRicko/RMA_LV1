@@ -19,7 +19,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testFullGetScoreFromDicesWithSameSide(){
+    fun testSameSide(){
 
         this.dices.forEach{it.side = 1}
 
@@ -30,7 +30,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testFullGetScoreFromDicesWithTwoFourCombination(){
+    fun testTwoFourCombination(){
 
         for( i in 0..1)
             this.dices[i].side = 2
@@ -45,7 +45,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testFullGetScoreFromDicesWithFourTowCombination(){
+    fun testFourTwoCombination(){
 
         for( i in 0..3)
             this.dices[i].side = 3
@@ -60,7 +60,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testFullGetScoreFromDicesWithFiveOneCombination(){
+    fun testFiveOneCombination(){
 
         this.dices[5].side = 1
 
@@ -74,7 +74,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testFullGetScoreFromDicesWithThreeTwoOneCombination(){
+    fun testThreeTwoOneCombination(){
 
         for( i in 0..2)
             this.dices[i].side = 3
@@ -91,7 +91,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testFullGetScoreFromDicesWithThreeThreeCombination(){
+    fun testThreeThreeCombination(){
 
         for(i in 0..2)
             this.dices[i].side = 3
@@ -106,7 +106,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testFullGetScoreFromDicesWithThreeThreeReversedCombination(){
+    fun testThreeThreeReversedCombination(){
 
         for(i in 0..2)
             this.dices[i].side = 4

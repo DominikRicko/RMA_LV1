@@ -25,7 +25,7 @@ internal class ScoreRulePokerTest{
     }
 
     @Test
-    fun testPokerGetScoreFromDicesWithSameSide(){
+    fun testSameSide(){
 
         this.dices.forEach{ it.side = 1}
 
@@ -36,7 +36,7 @@ internal class ScoreRulePokerTest{
     }
 
     @Test
-    fun testPokerGetScoreFromDicesFiveOneCombination(){
+    fun testFiveOneCombination(){
 
         for (i in 0..4)
             this.dices[i].side = 4
@@ -50,7 +50,7 @@ internal class ScoreRulePokerTest{
     }
 
     @Test
-    fun testPokerGetScoreFromDicesOneFiveCombination(){
+    fun testOneFiveCombination(){
 
         for (i in 1..5)
             this.dices[i].side = 5
@@ -64,7 +64,7 @@ internal class ScoreRulePokerTest{
     }
 
     @Test
-    fun testPokerGetScoreFromDicesThreeThreeCombination(){
+    fun testThreeThreeCombination(){
 
         for (i in 0..2)
             this.dices[i].side = 4
@@ -79,7 +79,7 @@ internal class ScoreRulePokerTest{
     }
 
     @Test
-    fun testPokerGetScoreFromDicesFourOneOneCombination(){
+    fun testFourOneOneCombination(){
 
         for (i in 0..3)
             this.dices[i].side = 4
