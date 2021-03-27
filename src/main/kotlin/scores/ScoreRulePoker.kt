@@ -17,12 +17,18 @@ object ScoreRulePoker : ScoreRule {
 
         return if(mostDiceSide.second >= 5)
             mostDiceSide.first * 4 + highestDice.first + 40
+
         else if(mostDiceSide.second == 4 && highestDice.first != mostDiceSide.first)
             mostDiceSide.first * 4 + highestDice.first + 40
-        else if(mostDiceSide.second == 4){
+
+        else if(mostDiceSide.second == 4 && dices.size > 4){
             val secondHighestDice = sortedGroupedDices[sortedGroupedDices.size - 2]
             mostDiceSide.first * 4 + secondHighestDice.first + 40
-        } else
+        }
+        else if(mostDiceSide.second == 4)
+            mostDiceSide.first * 4 + 40
+
+        else
             0
 
     }
