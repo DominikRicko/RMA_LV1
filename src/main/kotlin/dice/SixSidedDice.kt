@@ -9,15 +9,14 @@ class SixSidedDice() : Dice {
     override var side: Int = (1..6).random()
         set(value) {
 
-            if(value in 1..6)
+            if(value in 1..6 && !this.locked)
                 field = value
 
         }
 
     override fun roll() {
 
-        if(!this.locked)
-            this.side = (1..6).random()
+        this.side = (1..6).random()
 
     }
 
