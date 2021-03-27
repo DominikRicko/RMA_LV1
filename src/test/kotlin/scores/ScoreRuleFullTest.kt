@@ -19,7 +19,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testGetScoreFromDicesWithSameSide(){
+    fun testFullGetScoreFromDicesWithSameSide(){
 
         this.dices.forEach{it.side = 1}
 
@@ -30,7 +30,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testGetScoreFromDicesWithTwoFourCombination(){
+    fun testFullGetScoreFromDicesWithTwoFourCombination(){
 
         for( i in 0..1)
             this.dices[i].side = 2
@@ -40,12 +40,12 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(13, score)
+        assertEquals(43, score)
 
     }
 
     @Test
-    fun testGetScoreFromDicesWithFourTowCombination(){
+    fun testFullGetScoreFromDicesWithFourTowCombination(){
 
         for( i in 0..3)
             this.dices[i].side = 3
@@ -55,12 +55,12 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(13, score)
+        assertEquals(43, score)
 
     }
 
     @Test
-    fun testGetScoreFromDicesWithFiveOneCombination(){
+    fun testFullGetScoreFromDicesWithFiveOneCombination(){
 
         this.dices[5].side = 1
 
@@ -74,7 +74,7 @@ internal class ScoreRuleFullTest{
     }
 
     @Test
-    fun testGetScoreFromDicesWithThreeTwoOneCombination(){
+    fun testFullGetScoreFromDicesWithThreeTwoOneCombination(){
 
         for( i in 0..2)
             this.dices[i].side = 3
@@ -86,12 +86,12 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(13, score)
+        assertEquals(43, score)
 
     }
 
     @Test
-    fun testGetScoreFromDicesWithThreeThreeCombination(){
+    fun testFullGetScoreFromDicesWithThreeThreeCombination(){
 
         for(i in 0..2)
             this.dices[i].side = 3
@@ -101,12 +101,12 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(18, score)
+        assertEquals(48, score)
 
     }
 
     @Test
-    fun testGetScoreFromDicesWithThreeThreeReversedCombination(){
+    fun testFullGetScoreFromDicesWithThreeThreeReversedCombination(){
 
         for(i in 0..2)
             this.dices[i].side = 4
@@ -116,7 +116,7 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(18, score)
+        assertEquals(48, score)
 
     }
 }

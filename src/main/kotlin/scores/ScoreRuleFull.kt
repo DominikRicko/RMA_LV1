@@ -30,6 +30,7 @@ object ScoreRuleFull : ScoreRule{
         if(higherTripletOrMore != 0 && lowerPairOrTriplet != 0){
             score += higherTripletOrMore * 3
             score += lowerPairOrTriplet * 2
+            score += 30
         }
 
         return score
