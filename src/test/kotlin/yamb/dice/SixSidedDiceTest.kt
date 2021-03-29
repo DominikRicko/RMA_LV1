@@ -1,9 +1,8 @@
-package dice
+package yamb.dice
 
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
-import kotlin.test.asserter
 
 internal class SixSidedDiceTest {
 

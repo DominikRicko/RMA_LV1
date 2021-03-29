@@ -1,6 +1,4 @@
-package dice
-
-import kotlin.random.Random
+package yamb.dice
 
 class SixSidedDice() : Dice {
 

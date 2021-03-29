@@ -1,4 +1,4 @@
-package dice
+package yamb.dice
 
 interface Dice {
     var locked : Boolean

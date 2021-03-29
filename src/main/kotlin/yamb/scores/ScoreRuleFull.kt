@@ -1,8 +1,8 @@
-package scores
+package yamb.scores
 
-import dice.Dice
+import yamb.dice.Dice
 
-object ScoreRuleFull : ScoreRule{
+object ScoreRuleFull : ScoreRule {
 
     override fun getDiceScore(dices: Collection<Dice>) : Int{
 

@@ -1,6 +1,6 @@
-package scores
+package yamb.scores
 
-import dice.Dice
+import yamb.dice.Dice
 
 interface ScoreRule {
 
