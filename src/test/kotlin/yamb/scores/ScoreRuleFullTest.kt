@@ -25,7 +25,7 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(0, score)
+        assertEquals(0, score.value)
 
     }
 
@@ -40,7 +40,7 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(43, score)
+        assertEquals(43, score.value)
 
     }
 
@@ -55,7 +55,7 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(43, score)
+        assertEquals(43, score.value)
 
     }
 
@@ -69,7 +69,7 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(0, score)
+        assertEquals(0, score.value)
 
     }
 
@@ -86,7 +86,7 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(43, score)
+        assertEquals(43, score.value)
 
     }
 
@@ -101,7 +101,7 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(48, score)
+        assertEquals(48, score.value)
 
     }
 
@@ -116,7 +116,7 @@ internal class ScoreRuleFullTest{
 
         val score = ScoreRuleFull.getDiceScore(this.dices)
 
-        assertEquals(48, score)
+        assertEquals(48, score.value)
 
     }
 }

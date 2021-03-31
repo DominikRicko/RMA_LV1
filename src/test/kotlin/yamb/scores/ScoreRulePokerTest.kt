@@ -31,7 +31,7 @@ internal class ScoreRulePokerTest{
 
         val score = ScoreRulePoker.getDiceScore(this.dices)
 
-        assertEquals(45, score)
+        assertEquals(45, score.value)
 
     }
 
@@ -45,7 +45,7 @@ internal class ScoreRulePokerTest{
 
         val score = ScoreRulePoker.getDiceScore(this.dices)
 
-        assertEquals(61, score)
+        assertEquals(61, score.value)
 
     }
 
@@ -59,7 +59,7 @@ internal class ScoreRulePokerTest{
 
         val score = ScoreRulePoker.getDiceScore(this.dices)
 
-        assertEquals(65, score)
+        assertEquals(65, score.value)
 
     }
 
@@ -74,7 +74,7 @@ internal class ScoreRulePokerTest{
 
         val score = ScoreRulePoker.getDiceScore(this.dices)
 
-        assertEquals(0, score)
+        assertEquals(0, score.value)
 
     }
 
@@ -89,7 +89,7 @@ internal class ScoreRulePokerTest{
 
         val score = ScoreRulePoker.getDiceScore(this.dices)
 
-        assertEquals(58, score)
+        assertEquals(58, score.value)
 
     }
 

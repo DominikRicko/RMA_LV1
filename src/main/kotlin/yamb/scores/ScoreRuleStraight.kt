@@ -4,7 +4,7 @@ import yamb.dice.Dice
 
 object ScoreRuleStraight : ScoreRule {
 
-    override fun getDiceScore(dices: Collection<Dice>): Int {
+    override fun getDiceScore(dices: Collection<Dice>): Score {
 
         val countedSides = dices
             .groupBy{it.side}.toSortedMap()
@@ -24,15 +24,15 @@ object ScoreRuleStraight : ScoreRule {
             }
 
             if(largeStraightChecker == 1){
-                return 40
+                return Score(40)
             }
 
             if(smallStraightChecker == 0){
-                return 30
+                return Score(30)
             }
         }
 
-        return 0
+        return Score(0)
 
     }
 

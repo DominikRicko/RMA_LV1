@@ -4,7 +4,7 @@ import yamb.dice.Dice
 
 object ScoreRuleYamb : ScoreRule {
 
-    override fun getDiceScore(dices: Collection<Dice>): Int {
+    override fun getDiceScore(dices: Collection<Dice>): Score {
 
         val groupedDices = dices
             .groupBy { it.side }
@@ -12,11 +12,12 @@ object ScoreRuleYamb : ScoreRule {
 
         val mostDiceSide = groupedDices.maxByOrNull { it.second }!!
 
-        return if(mostDiceSide.second >= 5)
-            mostDiceSide.first * 5 + 50
-        else
-            0
-
+        return Score(
+            if(mostDiceSide.second >= 5)
+                mostDiceSide.first * 5 + 50
+            else
+                0
+        )
     }
 
 }

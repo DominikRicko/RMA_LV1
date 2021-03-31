@@ -32,7 +32,7 @@ internal class ScoreRuleYambTest{
 
         val score = ScoreRuleYamb.getDiceScore(this.dices)
 
-        assertEquals(55, score)
+        assertEquals(55, score.value)
 
     }
 
@@ -46,7 +46,7 @@ internal class ScoreRuleYambTest{
 
         val score = ScoreRuleYamb.getDiceScore(this.dices)
 
-        assertEquals(75, score)
+        assertEquals(75, score.value)
 
     }
 
@@ -61,7 +61,7 @@ internal class ScoreRuleYambTest{
 
         val score = ScoreRuleYamb.getDiceScore(this.dices)
 
-        assertEquals(0, score)
+        assertEquals(0, score.value)
 
     }
 }

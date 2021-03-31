@@ -34,7 +34,7 @@ internal class ScoreRuleStraightTest{
 
         val score = ScoreRuleStraight.getDiceScore(this.dices)
 
-        assertEquals(40, score)
+        assertEquals(40, score.value)
 
     }
 
@@ -50,7 +50,7 @@ internal class ScoreRuleStraightTest{
 
         val score = ScoreRuleStraight.getDiceScore(this.dices)
 
-        assertEquals(30, score)
+        assertEquals(30, score.value)
 
     }
 
@@ -66,7 +66,7 @@ internal class ScoreRuleStraightTest{
 
         val score = ScoreRuleStraight.getDiceScore(this.dices)
 
-        assertEquals(40, score)
+        assertEquals(40, score.value)
 
     }
 
@@ -82,7 +82,7 @@ internal class ScoreRuleStraightTest{
 
         val score = ScoreRuleStraight.getDiceScore(this.dices)
 
-        assertEquals(0, score)
+        assertEquals(0, score.value)
 
     }
 }

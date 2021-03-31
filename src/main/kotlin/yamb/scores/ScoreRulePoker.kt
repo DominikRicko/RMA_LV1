@@ -4,7 +4,7 @@ import yamb.dice.Dice
 
 object ScoreRulePoker : ScoreRule {
 
-    override fun getDiceScore(dices: Collection<Dice>): Int {
+    override fun getDiceScore(dices: Collection<Dice>): Score {
 
         val groupedDices = dices
             .groupBy { it.side }
@@ -15,21 +15,22 @@ object ScoreRulePoker : ScoreRule {
         val sortedGroupedDices = groupedDices.sortedBy { it.first }.toTypedArray()
         val highestDice = sortedGroupedDices.last()
 
-        return if(mostDiceSide.second >= 5)
-            mostDiceSide.first * 4 + highestDice.first + 40
+        return Score(
+            if(mostDiceSide.second >= 5)
+                mostDiceSide.first * 4 + highestDice.first + 40
 
-        else if(mostDiceSide.second == 4 && highestDice.first != mostDiceSide.first)
-            mostDiceSide.first * 4 + highestDice.first + 40
+            else if(mostDiceSide.second == 4 && highestDice.first != mostDiceSide.first)
+                mostDiceSide.first * 4 + highestDice.first + 40
 
-        else if(mostDiceSide.second == 4 && dices.size > 4){
-            val secondHighestDice = sortedGroupedDices[sortedGroupedDices.size - 2]
-            mostDiceSide.first * 4 + secondHighestDice.first + 40
-        }
-        else if(mostDiceSide.second == 4)
-            mostDiceSide.first * 4 + 40
+            else if(mostDiceSide.second == 4 && dices.size > 4){
+                val secondHighestDice = sortedGroupedDices[sortedGroupedDices.size - 2]
+                mostDiceSide.first * 4 + secondHighestDice.first + 40
+            }
+            else if(mostDiceSide.second == 4)
+                mostDiceSide.first * 4 + 40
 
-        else
-            0
-
+            else
+                0
+        )
     }
 }

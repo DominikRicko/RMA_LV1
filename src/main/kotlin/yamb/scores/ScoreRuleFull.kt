@@ -4,7 +4,7 @@ import yamb.dice.Dice
 
 object ScoreRuleFull : ScoreRule {
 
-    override fun getDiceScore(dices: Collection<Dice>) : Int{
+    override fun getDiceScore(dices: Collection<Dice>) : Score{
 
         val countedSides = dices
             .groupBy{it.side}.toSortedMap()
@@ -33,7 +33,7 @@ object ScoreRuleFull : ScoreRule {
             score += 30
         }
 
-        return score
+        return Score(score)
 
     }
 }
