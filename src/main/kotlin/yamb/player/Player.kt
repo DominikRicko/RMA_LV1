@@ -1,6 +1,11 @@
 package yamb.player
 
-interface Player {
-    val name : String
+import yamb.scores.Scoreboard
 
+class Player(val name: String) {
+    val scoreboard : Scoreboard = Scoreboard()
+
+    override fun toString(): String {
+        return name
+    }
 }
