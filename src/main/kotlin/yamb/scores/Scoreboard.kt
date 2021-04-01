@@ -3,7 +3,7 @@ package yamb.scores
 import data.Matrix
 import yamb.dice.Dice
 
-class YambScoreboard : ScoreBoard {
+class Scoreboard{
 
     companion object{
         val rowHeaders : ArrayList<Pair<String,ScoreRule>> = ArrayList()
@@ -22,13 +22,13 @@ class YambScoreboard : ScoreBoard {
 
     }
 
-    val scoreboard : Matrix<Score> = Matrix(columnHeaders.size, rowHeaders.size) { Score(Score.NO_SCORE_VALUE) }
+    val data : Matrix<Score> = Matrix(columnHeaders.size, rowHeaders.size) { Score(Score.NO_SCORE_VALUE) }
 
     fun getAvailableCellIndices() : Collection<Pair<Int,Int>>{
         val availableCells : ArrayList<Pair<Int,Int>> = arrayListOf()
 
         columnHeaders.forEachIndexed{ index, header ->
-            val indices = header.second.getAvailableIndices(scoreboard.getColumn(index))
+            val indices = header.second.getAvailableIndices(data.getColumn(index))
 
             indices.forEach {
                 availableCells.add(Pair(index, it))
@@ -51,8 +51,20 @@ class YambScoreboard : ScoreBoard {
 
     fun getScoreSum() : Int{
         var sum = 0
-        scoreboard.forEach { if(it.value != Score.NO_SCORE_VALUE) sum += it.value }
+        data.forEach { if(it.value != Score.NO_SCORE_VALUE) sum += it.value }
         return sum
+    }
+
+    override fun toString(): String {
+        var outputString = ""
+        columnHeaders.forEach { outputString += "\t " + it.first + " | " }
+        for (i in 0..data.sizeX step 1){
+            val row = data.getRow(i)
+            outputString += "\t " + rowHeaders[i].first + " | "
+            row.forEach{ outputString += "\t $it | "  }
+            outputString += "\n"
+        }
+        return outputString
     }
 
 }

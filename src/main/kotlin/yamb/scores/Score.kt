@@ -10,6 +10,6 @@ data class Score(var value: Int){
         return if(value == NO_SCORE_VALUE)
             "-"
         else
-            super.toString()
+            value.toString()
     }
 }
