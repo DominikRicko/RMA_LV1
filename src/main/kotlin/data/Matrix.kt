@@ -39,7 +39,7 @@ class Matrix<T>(val sizeX: Int, val sizeY: Int, private val array: Array<T>) {
 
         val arrayList : ArrayList<T> = ArrayList()
 
-        for( i in x..sizeY*sizeX step sizeX)
+        for( i in x until sizeY*sizeX step sizeX)
             arrayList.add(array[i])
 
         return arrayList
