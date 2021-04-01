@@ -105,12 +105,12 @@ class Scoreboard : Displayable {
                         outputString += "${data[i, index]}\t|"
 
                     startIndex = it.first+1
-                    outputString += "$score\t|"
+                    outputString += "$score${if(score.toString().length >= 3) "-|" else "-\t|"}"
                 }
 
             else
                 for(i in 0 until data.sizeX step 1)
-                    outputString += "${data[i, index]}\t"
+                    outputString += "${data[i, index]}\t|"
 
             outputString += "\n"
 
