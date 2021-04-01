@@ -62,8 +62,13 @@ class Yamb(private val rounds : Int) : Game{
     override fun start(){
 
         for (i in 0 until rounds step 1){
-            dices.forEach { it.locked = false }
-            players.forEach { it.doPlayerTurn() }
+            players.forEach { player ->
+                dices.forEach { dice ->
+                    dice.locked = false
+                    dice.roll()
+                }
+                player.doPlayerTurn()
+            }
         }
 
         gameEnd()

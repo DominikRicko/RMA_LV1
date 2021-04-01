@@ -40,7 +40,7 @@ class YambUserPlayer(override val name: String, override val game: Yamb) : YambP
         val userInput = getUserInput() ?: return
 
         when (userInput.first){
-            "roll "-> {
+            "roll" -> {
                 game.rollDices()
                 diceRolls--
                 scoreboard.updatePredictions(Yamb.dices)
@@ -58,7 +58,7 @@ class YambUserPlayer(override val name: String, override val game: Yamb) : YambP
 
     override fun getDisplayStringSet(): String {
 
-        var outputString = "$name\n"
+        var outputString = "$name\t\t Rolls: $diceRolls\n"
 
         outputString += scoreboard.getDisplayStringSet()
 

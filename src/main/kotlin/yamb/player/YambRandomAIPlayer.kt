@@ -40,7 +40,7 @@ class YambRandomAIPlayer(override val name: String, override val game: Yamb) : Y
 
     override fun getDisplayStringSet(): String {
 
-        var outputString = "$name\n"
+        var outputString = "$name\t\t Rolls: $diceRolls\n"
         outputString += scoreboard.getDisplayStringSet()
         outputString += Yamb.getDisplayStringSet()
         return outputString
