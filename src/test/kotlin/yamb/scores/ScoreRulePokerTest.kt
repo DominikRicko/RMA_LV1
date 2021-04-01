@@ -1,7 +1,7 @@
 package yamb.scores
 
-import yamb.dice.Dice
-import yamb.dice.SixSidedDice
+import dice.Dice
+import dice.SixSidedDice
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

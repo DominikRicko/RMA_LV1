@@ -1,6 +1,6 @@
 package yamb.scores
 
-import yamb.dice.Dice
+import dice.Dice
 
 object ScoreRulePoker : ScoreRule {
 

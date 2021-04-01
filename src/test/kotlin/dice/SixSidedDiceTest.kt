@@ -1,4 +1,4 @@
-package yamb.dice
+package dice
 
 import org.junit.jupiter.api.Test
 

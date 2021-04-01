@@ -1,4 +1,4 @@
-package yamb.dice
+package dice
 
 class SixSidedDice() : Dice {
 
