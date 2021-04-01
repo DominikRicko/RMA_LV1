@@ -49,11 +49,23 @@ class YambUserPlayer(override val name: String, override val game: Yamb) : YambP
             "unlock" -> game.lockDice(userInput.second.first, false)
             "save" -> if(scoreboard.writeToScoreboard(
                     userInput.second.first,userInput.second.second))
-                        diceRolls = 0
+                        diceRolls = -1
 
             else -> println("Unknown command")
         }
 
+    }
+
+    override fun forceSave() {
+        while(true){
+            println("You are out of rolls, you can only use save command")
+            val input = getUserInput() ?: continue
+
+            if(input.first != "save") continue
+
+            if(scoreboard.writeToScoreboard(input.second.first, input.second.second))
+                return
+        }
     }
 
     override fun getDisplayStringSet(): String {
@@ -62,7 +74,7 @@ class YambUserPlayer(override val name: String, override val game: Yamb) : YambP
 
         outputString += scoreboard.getDisplayStringSet()
 
-        outputString += "Commands are: sel num1 num2 - to fill in the spot on the scoreboard\n"
+        outputString += "Commands are: save num1 num2 - to fill in the spot on the scoreboard\n"
         outputString += "\t\tlock diceNumber - to lock a particular dice\n"
         outputString += "\t\tunlock diceNumber -to unlock a particular dice\n"
         outputString += "\t\troll - to roll all unlocked dices\n"

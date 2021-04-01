@@ -34,7 +34,17 @@ class YambRandomAIPlayer(override val name: String, override val game: Yamb) : Y
             1 -> game.lockDice(argument1, true)
             2 -> game.lockDice(argument1, false)
             3 -> if(scoreboard.writeToScoreboard(argument1,argument2))
-                diceRolls = 0
+                diceRolls = -1
+        }
+    }
+
+    override fun forceSave() {
+        while(true){
+            val argument1 = (0 until Scoreboard.rowHeaders.size).random()
+            val argument2 = (0 until Scoreboard.columnHeaders.size).random()
+
+            if(scoreboard.writeToScoreboard(argument1,argument2))
+                return
         }
     }
 

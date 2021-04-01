@@ -13,6 +13,8 @@ interface YambPlayer : Observable<Displayable> {
 
     fun processNextCommand()
 
+    fun forceSave()
+
     fun getTotalScore() : Int{
         return scoreboard.getScoreSum()
     }
@@ -24,6 +26,11 @@ interface YambPlayer : Observable<Displayable> {
         while(diceRolls > 0){
             notifyObservers()
             processNextCommand()
+        }
+
+        if(diceRolls != -1){
+            notifyObservers()
+            forceSave()
         }
 
     }
