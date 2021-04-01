@@ -1,10 +1,31 @@
 package yamb.player
 
-import dice.Dice
+import consoleGraphics.Displayable
+import data.Observable
+import yamb.Yamb
+import yamb.scores.Scoreboard
 
-interface YambPlayer {
+interface YambPlayer : Observable<Displayable> {
+    var diceRolls : Int
     val name : String
-    fun doPlayerTurn()
-    fun giveDices(dices : Collection<Dice>)
-    fun getTotalScore() : Int
+    val scoreboard : Scoreboard
+    val game : Yamb
+
+    fun processNextCommand()
+
+    fun getTotalScore() : Int{
+        return scoreboard.getScoreSum()
+    }
+
+    fun doPlayerTurn() {
+        diceRolls = 3
+        scoreboard.updatePredictions(Yamb.dices)
+
+        while(diceRolls > 0){
+            notifyObservers()
+            processNextCommand()
+        }
+
+    }
+
 }

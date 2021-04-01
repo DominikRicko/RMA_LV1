@@ -1,9 +1,10 @@
 package yamb.scores
 
+import consoleGraphics.Displayable
 import data.Matrix
 import dice.Dice
 
-class Scoreboard{
+class Scoreboard : Displayable {
 
     companion object{
         val rowHeaders : ArrayList<Pair<String,ScoreRule>> = ArrayList()
@@ -17,14 +18,16 @@ class Scoreboard{
 
             columnHeaders.add(Pair("\\/",ScoreColumnRuleTopDown))
             columnHeaders.add(Pair("/\\",ScoreColumnRuleBottomUp))
-            columnHeaders.add(Pair("\\/\\",ScoreColumnRuleAny))
+            columnHeaders.add(Pair("-",ScoreColumnRuleAny))
         }
 
     }
 
-    val data : Matrix<Score> = Matrix(columnHeaders.size, rowHeaders.size) { Score(Score.NO_SCORE_VALUE) }
+    private val data : Matrix<Score> = Matrix(columnHeaders.size, rowHeaders.size) { Score(Score.NO_SCORE_VALUE) }
+    private lateinit var validCells : Collection<Pair<Int,Int>>
+    private lateinit var scores : Collection<Score>
 
-    fun getAvailableCellIndices() : Collection<Pair<Int,Int>>{
+    private fun getAvailableCellIndices() : Collection<Pair<Int,Int>>{
         val availableCells : ArrayList<Pair<Int,Int>> = arrayListOf()
 
         columnHeaders.forEachIndexed{ index, header ->
@@ -40,7 +43,7 @@ class Scoreboard{
 
     }
 
-    fun getScorePredictions(dices : Collection<Dice>) : Collection<Score>{
+    private fun getScorePredictions(dices : Collection<Dice>) : Collection<Score>{
 
         val scores : ArrayList<Score> = arrayListOf()
 
@@ -49,21 +52,70 @@ class Scoreboard{
         return scores
     }
 
+    fun updatePredictions(dices : Collection<Dice>){
+        validCells = getAvailableCellIndices()
+        scores = getScorePredictions(dices)
+    }
+
+    fun writeToScoreboard(dataIndexX : Int, dataIndexY : Int) : Boolean{
+
+        var isValidCell = false
+        validCells.forEach {
+            if(it.first == dataIndexX && it.second == dataIndexY)
+            {
+                isValidCell = true
+                return@forEach
+            }
+
+        }
+
+        if (isValidCell){
+            data[dataIndexX, dataIndexY] = scores.elementAt(dataIndexX)
+        }
+
+        return isValidCell
+    }
+
     fun getScoreSum() : Int{
         var sum = 0
         data.forEach { if(it.value != Score.NO_SCORE_VALUE) sum += it.value }
         return sum
     }
 
-    override fun toString(): String {
-        var outputString = ""
-        columnHeaders.forEach { outputString += "\t " + it.first + " | " }
-        for (i in 0..data.sizeX step 1){
-            val row = data.getRow(i)
-            outputString += "\t " + rowHeaders[i].first + " | "
-            row.forEach{ outputString += "\t $it | "  }
-            outputString += "\n"
+    override fun getDisplayStringSet(): String {
+
+        var outputString = "\t\t\t|"
+
+        columnHeaders.forEach{
+            outputString += "${it.first}\t|"
         }
+        outputString += "\n"
+
+        scores.forEachIndexed{index, score ->
+
+            var startIndex = 0
+            outputString += rowHeaders[index].first + if(rowHeaders[index].first.length >= 8) "\t|" else "\t\t|"
+
+            val validCellsInRow = validCells.filter{ it.second == index }
+
+            if(validCellsInRow.isNotEmpty())
+                validCellsInRow.forEach {
+
+                    for (i in startIndex until it.first step 1)
+                        outputString += "${data[i, index]}\t|"
+
+                    startIndex = it.first+1
+                    outputString += "$score\t|"
+                }
+
+            else
+                for(i in 0 until data.sizeX step 1)
+                    outputString += "${data[i, index]}\t"
+
+            outputString += "\n"
+
+        }
+
         return outputString
     }
 
