@@ -1,7 +1,7 @@
 package yamb.scores
 
 import data.Matrix
-import yamb.dice.Dice
+import dice.Dice
 
 class Scoreboard{
 
