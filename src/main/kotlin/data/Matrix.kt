@@ -45,4 +45,8 @@ class Matrix<T>(val sizeX: Int, val sizeY: Int, private val array: Array<T>) {
         return arrayList
     }
 
+    fun forEach(action : (T) -> Unit){
+        array.forEach(action)
+    }
+
 }
