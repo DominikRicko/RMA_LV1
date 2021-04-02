@@ -91,26 +91,23 @@ class Scoreboard : Displayable {
         }
         outputString += "\n"
 
-        scores.forEachIndexed{index, score ->
+        for( j in 0 until data.sizeY ){
 
-            var startIndex = 0
-            outputString += rowHeaders[index].first + if(rowHeaders[index].first.length >= 8) "\t|" else "\t\t|"
+            outputString += rowHeaders[j].first + if(rowHeaders[j].first.length >= 8) "\t|" else "\t\t|"
+            val validCellsInRow = validCells.filter{ it.second == j }.map { it.first }
 
-            val validCellsInRow = validCells.filter{ it.second == index }
+            for( i in 0 until data.sizeX ){
 
-            if(validCellsInRow.isNotEmpty())
-                validCellsInRow.forEach {
+                outputString += if(validCellsInRow.contains(i)){
 
-                    for (i in startIndex until it.first step 1)
-                        outputString += "${data[i, index]}\t|"
+                    val score = scores.elementAt(i)
+                    "$score${if(score.toString().length >= 2) "-|" else "-\t|"}"
 
-                    startIndex = it.first+1
-                    outputString += "$score${if(score.toString().length >= 3) "-|" else "-\t|"}"
+                } else{
+                    "${data[i, j]}\t|"
                 }
 
-            else
-                for(i in 0 until data.sizeX step 1)
-                    outputString += "${data[i, index]}\t|"
+            }
 
             outputString += "\n"
 
