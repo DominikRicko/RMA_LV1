@@ -70,7 +70,7 @@ class Scoreboard : Displayable {
         }
 
         if (isValidCell){
-            data[dataIndexX, dataIndexY] = scores.elementAt(dataIndexX)
+            data[dataIndexX, dataIndexY] = scores.elementAt(dataIndexY)
         }
 
         return isValidCell
