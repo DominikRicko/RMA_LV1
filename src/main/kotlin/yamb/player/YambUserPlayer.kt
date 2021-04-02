@@ -1,15 +1,8 @@
 package yamb.player
 
-import consoleGraphics.Displayable
-import data.Observer
 import yamb.Yamb
-import yamb.scores.Scoreboard
 
-class YambUserPlayer(override val name: String, override val game: Yamb) : YambPlayer, Displayable{
-
-    override var diceRolls: Int = 0
-
-    override val scoreboard : Scoreboard = Scoreboard()
+class YambUserPlayer(override val name: String, override val game: Yamb) : YambPlayer{
 
     private fun getUserInput() : Pair<String, Pair<Int,Int>>?{
         val input = (readLine()?.split(' ')) ?: return null
@@ -40,58 +33,19 @@ class YambUserPlayer(override val name: String, override val game: Yamb) : YambP
         val userInput = getUserInput() ?: return
 
         when (userInput.first){
-            "roll" -> {
-                game.rollDices()
-                diceRolls--
-                scoreboard.updatePredictions(Yamb.dices)
-            }
+            "roll" -> game.rollDices(this)
             "lock" -> game.lockDice(userInput.second.first, true)
             "unlock" -> game.lockDice(userInput.second.first, false)
-            "save" -> if(scoreboard.writeToScoreboard(
-                    userInput.second.first,userInput.second.second))
-                        diceRolls = -1
-
+            "save" -> game.saveScore(userInput.second.first, userInput.second.second)
             else -> println("Unknown command")
         }
 
     }
 
-    override fun forceSave() {
-        while(true){
-            println("You are out of rolls, you can only use save command")
-            val input = getUserInput() ?: continue
+    override fun toString(): String {
 
-            if(input.first != "save") continue
+        return name
 
-            if(scoreboard.writeToScoreboard(input.second.first, input.second.second))
-                return
-        }
-    }
-
-    override fun getDisplayStringSet(): String {
-
-        var outputString = "$name\t\t Rolls: $diceRolls\n"
-
-        outputString += scoreboard.getDisplayStringSet()
-
-        outputString += "Commands are: save num1 num2 - to fill in the spot on the scoreboard\n"
-        outputString += "\t\tlock diceNumber - to lock a particular dice\n"
-        outputString += "\t\tunlock diceNumber -to unlock a particular dice\n"
-        outputString += "\t\troll - to roll all unlocked dices\n"
-
-        outputString += Yamb.getDisplayStringSet()
-
-        return outputString
-    }
-
-    private val observers: ArrayList<Observer<Displayable>> = arrayListOf()
-
-    override fun subscribe(observer: Observer<Displayable>) {
-        observers.add(observer)
-    }
-
-    override fun notifyObservers() {
-        observers.forEach { it.update(this) }
     }
 
 }

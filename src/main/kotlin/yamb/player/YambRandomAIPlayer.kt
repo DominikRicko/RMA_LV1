@@ -1,11 +1,9 @@
 package yamb.player
 
-import consoleGraphics.Displayable
-import data.Observer
 import yamb.Yamb
 import yamb.scores.Scoreboard
 
-class YambRandomAIPlayer(override val name: String, override val game: Yamb) : YambPlayer, Displayable {
+class YambRandomAIPlayer(override val name: String, override val game: Yamb) : YambPlayer{
 
     companion object{
 
@@ -15,9 +13,6 @@ class YambRandomAIPlayer(override val name: String, override val game: Yamb) : Y
 
     }
 
-    override var diceRolls: Int = 0
-
-    override val scoreboard: Scoreboard = Scoreboard()
     override fun processNextCommand() {
 
         val command = (0..3).random()
@@ -26,45 +21,17 @@ class YambRandomAIPlayer(override val name: String, override val game: Yamb) : Y
         val argument2 = (0 until Scoreboard.columnHeaders.size).random()
 
         when (command){
-            0-> {
-                game.rollDices()
-                diceRolls--
-                scoreboard.updatePredictions(Yamb.dices)
-            }
+            0-> game.rollDices(this)
             1 -> game.lockDice(argument1, true)
             2 -> game.lockDice(argument1, false)
-            3 -> if(scoreboard.writeToScoreboard(argument1,argument2))
-                diceRolls = -1
+            3 -> game.saveScore(argument1, argument2)
         }
     }
 
-    override fun forceSave() {
-        while(true){
-            val argument1 = (0 until Scoreboard.rowHeaders.size).random()
-            val argument2 = (0 until Scoreboard.columnHeaders.size).random()
+    override fun toString(): String {
 
-            if(scoreboard.writeToScoreboard(argument1,argument2))
-                return
-        }
+        return name
+
     }
-
-    override fun getDisplayStringSet(): String {
-
-        var outputString = "$name\t\t Rolls: $diceRolls\n"
-        outputString += scoreboard.getDisplayStringSet()
-        outputString += Yamb.getDisplayStringSet()
-        return outputString
-    }
-
-    private val observers: ArrayList<Observer<Displayable>> = arrayListOf()
-
-    override fun subscribe(observer: Observer<Displayable>) {
-        observers.add(observer)
-    }
-
-    override fun notifyObservers() {
-        observers.forEach { it.update(this) }
-    }
-
 
 }

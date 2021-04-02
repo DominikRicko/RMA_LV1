@@ -1,15 +1,17 @@
 package yamb
 
 import Game
-import consoleGraphics.ConsolePrinter
 import consoleGraphics.Displayable
+import data.Observable
+import data.Observer
 import dice.Dice
 import dice.SixSidedDice
 import yamb.player.YambPlayer
 import yamb.player.YambRandomAIPlayer
 import yamb.player.YambUserPlayer
+import yamb.scores.Scoreboard
 
-class Yamb(private val rounds : Int) : Game{
+class Yamb(private val rounds : Int) : Game, Observable<Displayable>, Displayable {
 
     companion object : Displayable{
         val dices : Collection<Dice> = listOf(
@@ -35,9 +37,39 @@ class Yamb(private val rounds : Int) : Game{
     }
 
     private val players : ArrayList<YambPlayer> = arrayListOf()
+    private val scoreboards : HashMap<YambPlayer, Scoreboard> = hashMapOf()
+    private lateinit var currentPlayer : YambPlayer
 
-    fun rollDices(){
+    private var diceRolls : Int = 0
+
+    private fun doPlayerTurn() {
+
+        diceRolls = 3
+        scoreboards[currentPlayer]!!.updatePredictions(dices)
+
+        while(diceRolls > 0){
+            notifyObservers()
+            currentPlayer.processNextCommand()
+        }
+
+        if(diceRolls > -1){
+            notifyObservers()
+            forceSave()
+        }
+
+    }
+
+    private fun forceSave() {
+        while(diceRolls > -1){
+            println("You are out of rolls, you can only use save command")
+            currentPlayer.processNextCommand()
+        }
+    }
+
+    fun rollDices(player : YambPlayer){
+        diceRolls--
         dices.forEach { it.roll() }
+        scoreboards[player]!!.updatePredictions(dices)
     }
 
     fun lockDice(whichDiceIndex : Int, lock : Boolean){
@@ -45,10 +77,14 @@ class Yamb(private val rounds : Int) : Game{
             dices.elementAt(whichDiceIndex).locked = lock
     }
 
+    fun saveScore(indexX : Int, indexY : Int){
+        if(scoreboards[currentPlayer]!!.writeToScoreboard(indexX,indexY))
+            diceRolls = -1
+    }
 
     private fun gameEnd(){
 
-        val finalScoreboard = players.map { Pair(it.name ,it.getTotalScore()) }
+        val finalScoreboard = players.map { Pair(it.name ,scoreboards[it]!!.getScoreSum()) }
 
         println("Final scoreboard")
         println("=====================================")
@@ -61,13 +97,18 @@ class Yamb(private val rounds : Int) : Game{
 
     override fun start(){
 
+        players.forEach {
+            scoreboards[it] = Scoreboard()
+        }
+
         for (i in 0 until rounds step 1){
             players.forEach { player ->
                 dices.forEach { dice ->
                     dice.locked = false
                     dice.roll()
                 }
-                player.doPlayerTurn()
+                currentPlayer = player
+                doPlayerTurn()
             }
         }
 
@@ -76,14 +117,36 @@ class Yamb(private val rounds : Int) : Game{
 
     override fun addPlayer(playerName: String, playerType: Game.PlayerType) {
 
-        val newPlayer = when(playerType){
+        players.add(when(playerType){
             Game.PlayerType.USER -> YambUserPlayer(playerName, this)
             Game.PlayerType.RANDOM_AI -> YambRandomAIPlayer(this)
-        }
+        })
 
-        newPlayer.subscribe(ConsolePrinter)
-        players.add(newPlayer)
+    }
 
+    private val subscribers : ArrayList<Observer<Displayable>> = arrayListOf()
+
+    override fun subscribe(observer: Observer<Displayable>) {
+        subscribers.add(observer)
+    }
+
+    override fun notifyObservers() {
+        subscribers.forEach { it.update(this) }
+    }
+
+    override fun getDisplayStringSet(): String {
+        var outputString = "$currentPlayer\t\t Rolls: $diceRolls\n"
+
+        outputString += scoreboards[currentPlayer]!!.getDisplayStringSet()
+
+        outputString += "Commands are: save num1 num2 - to fill in the spot on the scoreboard\n"
+        outputString += "\t\tlock diceNumber - to lock a particular dice\n"
+        outputString += "\t\tunlock diceNumber -to unlock a particular dice\n"
+        outputString += "\t\troll - to roll all unlocked dices\n"
+
+        outputString += Yamb.getDisplayStringSet()
+
+        return outputString
     }
 
 }
