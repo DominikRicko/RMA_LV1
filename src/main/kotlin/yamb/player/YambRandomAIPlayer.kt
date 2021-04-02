@@ -11,7 +11,7 @@ class YambRandomAIPlayer(override val name: String, override val game: Yamb) : Y
 
         private var counter = 0
 
-        operator fun invoke(game : Yamb): YambRandomAIPlayer = YambRandomAIPlayer("AI $counter++", game)
+        operator fun invoke(game : Yamb): YambRandomAIPlayer = YambRandomAIPlayer("AI ${counter++}", game)
 
     }
 
