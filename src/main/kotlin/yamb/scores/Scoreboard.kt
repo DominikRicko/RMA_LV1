@@ -100,7 +100,7 @@ class Scoreboard : Displayable {
 
                 outputString += if(validCellsInRow.contains(i)){
 
-                    val score = scores.elementAt(i)
+                    val score = scores.elementAt(j)
                     "$score${if(score.toString().length >= 2) "-|" else "-\t|"}"
 
                 } else{
