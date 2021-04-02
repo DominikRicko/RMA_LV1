@@ -67,6 +67,7 @@ class Yamb(private val rounds : Int) : Game, Observable<Displayable>, Displayabl
     }
 
     fun rollDices(player : YambPlayer){
+        if(diceRolls <= 0) return
         diceRolls--
         dices.forEach { it.roll() }
         scoreboards[player]!!.updatePredictions(dices)
