@@ -1,5 +1,5 @@
 package consoleGraphics
 
 interface Displayable {
-    fun getDisplayStringSet() : String
+    fun getDisplayStringSet(): String
 }

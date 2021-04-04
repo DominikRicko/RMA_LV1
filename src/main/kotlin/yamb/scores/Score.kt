@@ -1,13 +1,13 @@
 package yamb.scores
 
-data class Score(var value: Int){
+data class Score(var value: Int) {
 
-    companion object{
+    companion object {
         const val NO_SCORE_VALUE = -1
     }
 
     override fun toString(): String {
-        return if(value == NO_SCORE_VALUE)
+        return if (value == NO_SCORE_VALUE)
             "-"
         else
             value.toString()

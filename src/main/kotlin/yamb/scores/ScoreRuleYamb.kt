@@ -8,12 +8,12 @@ object ScoreRuleYamb : ScoreRule {
 
         val groupedDices = dices
             .groupBy { it.side }
-            .map{ it-> Pair(it.key, it.value.size)}
+            .map { it -> Pair(it.key, it.value.size) }
 
         val mostDiceSide = groupedDices.maxByOrNull { it.second }!!
 
         return Score(
-            if(mostDiceSide.second >= 5)
+            if (mostDiceSide.second >= 5)
                 mostDiceSide.first * 5 + 50
             else
                 0

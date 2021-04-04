@@ -4,6 +4,6 @@ import dice.Dice
 
 interface ScoreRule {
 
-    fun getDiceScore(dices : Collection<Dice>) : Score
+    fun getDiceScore(dices: Collection<Dice>): Score
 
 }

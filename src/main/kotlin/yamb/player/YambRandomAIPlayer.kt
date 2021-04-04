@@ -3,13 +3,13 @@ package yamb.player
 import yamb.Yamb
 import yamb.scores.Scoreboard
 
-class YambRandomAIPlayer(override val name: String, override val game: Yamb) : YambPlayer{
+class YambRandomAIPlayer(override val name: String, override val game: Yamb) : YambPlayer {
 
-    companion object{
+    companion object {
 
         private var counter = 0
 
-        operator fun invoke(game : Yamb): YambRandomAIPlayer = YambRandomAIPlayer("AI ${counter++}", game)
+        operator fun invoke(game: Yamb): YambRandomAIPlayer = YambRandomAIPlayer("AI ${counter++}", game)
 
     }
 
@@ -20,8 +20,8 @@ class YambRandomAIPlayer(override val name: String, override val game: Yamb) : Y
         val argument1 = (0 until Scoreboard.rowHeaders.size).random()
         val argument2 = (0 until Scoreboard.columnHeaders.size).random()
 
-        when (command){
-            0-> game.rollDices(this)
+        when (command) {
+            0 -> game.rollDices(this)
             1 -> game.lockDice(argument1, true)
             2 -> game.lockDice(argument1, false)
             3 -> game.saveScore(argument1, argument2)
