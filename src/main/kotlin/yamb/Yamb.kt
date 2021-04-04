@@ -131,6 +131,10 @@ class Yamb(private val rounds : Int) : Game, Observable<Displayable>, Displayabl
         subscribers.add(observer)
     }
 
+    override fun unsubscribe(observer: Observer<Displayable>) {
+        subscribers.remove(observer)
+    }
+
     override fun notifyObservers() {
         subscribers.forEach { it.update(this) }
     }
