@@ -1,12 +1,12 @@
 package cards
 
-class MutableDeck : Deck{
+class MutableDeck : Deck {
 
-    private val cards : ArrayList<Card> = arrayListOf()
+    private val cards: ArrayList<Card> = arrayListOf()
 
-    fun addCard(card: Card){
+    fun addCard(card: Card) {
 
-        if(!cards.contains(card))
+        if (!cards.contains(card))
             cards.add(card)
 
     }

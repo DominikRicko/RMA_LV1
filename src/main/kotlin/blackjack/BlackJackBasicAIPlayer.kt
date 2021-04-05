@@ -4,7 +4,7 @@ import cards.Card
 
 class BlackJackBasicAIPlayer(override val name: String, override val game: Blackjack) : BlackjackPlayer {
 
-    override val hand : ArrayList<Card> = arrayListOf()
+    override val hand: ArrayList<Card> = arrayListOf()
 
     override fun getHandScore(): Int {
 
@@ -21,9 +21,9 @@ class BlackJackBasicAIPlayer(override val name: String, override val game: Black
 
         }
 
-        for(i in 0 until aceCount){
+        for (i in 0 until aceCount) {
 
-            if(sum + 11 > 21)
+            if (sum + 11 > 21)
                 sum++
             else
                 sum += 11
@@ -49,12 +49,13 @@ class BlackJackBasicAIPlayer(override val name: String, override val game: Black
 
         val currentScore = getHandScore()
 
-        if(currentScore <= 16)
+        if (currentScore <= 16)
             game.dealCard(this)
         else
             game.endTurn()
 
     }
+
     override fun toString(): String {
         return name
     }

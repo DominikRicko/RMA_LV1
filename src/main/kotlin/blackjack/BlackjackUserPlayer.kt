@@ -4,7 +4,7 @@ import cards.Card
 
 class BlackjackUserPlayer(override val name: String, override val game: Blackjack) : BlackjackPlayer {
 
-    override val hand : ArrayList<Card> = arrayListOf()
+    override val hand: ArrayList<Card> = arrayListOf()
 
     override fun getHandScore(): Int {
 
@@ -21,9 +21,9 @@ class BlackjackUserPlayer(override val name: String, override val game: Blackjac
 
         }
 
-        for(i in 0 until aceCount){
+        for (i in 0 until aceCount) {
 
-            if(sum + 11 > 21)
+            if (sum + 11 > 21)
                 sum++
             else
                 sum += 11
@@ -47,7 +47,7 @@ class BlackjackUserPlayer(override val name: String, override val game: Blackjac
 
     override fun processNextCommand() {
 
-        when(getUserInput()){
+        when (getUserInput()) {
             "hit" -> game.dealCard(this)
             "stand" -> game.endTurn()
             else -> println("Could not process command.")

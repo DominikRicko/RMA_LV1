@@ -5,7 +5,7 @@ import yamb.Yamb
 val playerNames = arrayListOf<String>()
 val playerTypes = arrayListOf<Game.PlayerType>()
 
-fun instantTest(){
+fun instantTest() {
     val game = Blackjack(4)
 
     game.addPlayer("Dominik", Game.PlayerType.USER)
@@ -22,10 +22,10 @@ fun main() {
 
     instantTest()
 
-    while(true){
+    while (true) {
         val input = readLine()?.split(' ') ?: continue
 
-        when(input[0]){
+        when (input[0]) {
             "add_player" -> addPlayer(input[1], input[2])
             "start_yamb" -> startYamb(input[1])
             "start_blackjack" -> startBlackjack(input[1])
@@ -39,18 +39,18 @@ fun main() {
 fun startBlackjack(roundsString: String) {
 
     var rounds = 0
-    if (runCatching { rounds = roundsString.toInt() }.isFailure){
+    if (runCatching { rounds = roundsString.toInt() }.isFailure) {
         println("Error parsing rounds amount")
         return
     }
 
-    if(rounds > 0){
+    if (rounds > 0) {
         println("Rounds cannot be lower than 1")
     }
 
     val game = Blackjack(rounds)
 
-    for(i in 0 until playerNames.size step 1){
+    for (i in 0 until playerNames.size step 1) {
         game.addPlayer(playerNames[i], playerTypes[i])
     }
 
@@ -58,15 +58,15 @@ fun startBlackjack(roundsString: String) {
 
 }
 
-fun startYamb(roundsString : String) {
+fun startYamb(roundsString: String) {
 
     var rounds = 0
-    if (runCatching { rounds = roundsString.toInt() }.isFailure){
+    if (runCatching { rounds = roundsString.toInt() }.isFailure) {
         println("Error parsing rounds amount")
         return
     }
 
-    if(rounds > 0){
+    if (rounds > 0) {
         println("Rounds cannot be lower than 1")
     }
 
@@ -74,7 +74,7 @@ fun startYamb(roundsString : String) {
 
     game.subscribe(ConsolePrinter)
 
-    for( i in 0 until playerNames.size step 1){
+    for (i in 0 until playerNames.size step 1) {
         game.addPlayer(playerNames[i], playerTypes[i])
     }
 
@@ -93,19 +93,19 @@ fun displayHelp() {
 
 fun addPlayer(playerName: String, playerTypeString: String) {
 
-    val playerType = when(playerTypeString){
+    val playerType = when (playerTypeString) {
         "user" -> Game.PlayerType.USER
         "randomAI" -> Game.PlayerType.RANDOM_AI
         "basicAI" -> Game.PlayerType.BASIC_AI
         else -> null
     }
 
-    if(playerType == null){
+    if (playerType == null) {
         println("Error parsing player type")
         return
     }
 
-    if(playerNames.contains(playerName)){
+    if (playerNames.contains(playerName)) {
         println("Cannot have two players with same name")
         return
     }

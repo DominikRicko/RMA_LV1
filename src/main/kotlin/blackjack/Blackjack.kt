@@ -7,27 +7,27 @@ import consoleGraphics.Displayable
 import data.Observable
 import data.Observer
 
-class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displayable {
+class Blackjack(private val rounds: Int) : Game, Observable<Displayable>, Displayable {
 
-    private val players : ArrayList<BlackjackPlayer> = arrayListOf()
+    private val players: ArrayList<BlackjackPlayer> = arrayListOf()
     private val deck = MutableDeck()
 
-    private enum class GameState{
+    private enum class GameState {
         ROUND_START,
         TURN_START,
         TURN_END,
         ROUND_END
     }
 
-    private var gameState : GameState = GameState.ROUND_START
-    private var startingDeckSize : Int = 0
-    private lateinit var currentPlayer : BlackjackPlayer
+    private var gameState: GameState = GameState.ROUND_START
+    private var startingDeckSize: Int = 0
+    private lateinit var currentPlayer: BlackjackPlayer
 
-    init{
+    init {
 
         enumValues<Card.Rank>().forEach { rank ->
-            enumValues<Card.Suit>().forEach{ suit ->
-                deck.addCard(Card(rank,suit))
+            enumValues<Card.Suit>().forEach { suit ->
+                deck.addCard(Card(rank, suit))
             }
         }
 
@@ -35,7 +35,7 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
 
     override fun start() {
 
-        for(round in 0 until rounds step 1){
+        for (round in 0 until rounds step 1) {
 
             deck.shuffle()
 
@@ -49,22 +49,22 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
 
             gameState = GameState.ROUND_START
 
-            while(gameState != GameState.ROUND_END){
+            while (gameState != GameState.ROUND_END) {
 
                 startingDeckSize = deck.getSize()
 
                 var i = 0
-                while( i < roundPlayers.size){
+                while (i < roundPlayers.size) {
 
                     currentPlayer = roundPlayers[i]
                     gameState = GameState.TURN_START
 
-                    while(gameState != GameState.TURN_END){
+                    while (gameState != GameState.TURN_END) {
 
                         notifyObservers()
                         currentPlayer.processNextCommand()
 
-                        if(currentPlayer.getHandScore() >= 21) {
+                        if (currentPlayer.getHandScore() >= 21) {
 
                             roundPlayers.removeAt(i)
                             i--
@@ -89,13 +89,13 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
 
     }
 
-    private fun determineVictors() : Collection<BlackjackPlayer>{
+    private fun determineVictors(): Collection<BlackjackPlayer> {
 
-        val leaderboard = players.filter{it.getHandScore() <= 21}.groupBy { it.getHandScore() }.toSortedMap()
+        val leaderboard = players.filter { it.getHandScore() <= 21 }.groupBy { it.getHandScore() }.toSortedMap()
 
         val victors = arrayListOf<BlackjackPlayer>()
 
-        if(leaderboard.size == 0) return victors
+        if (leaderboard.size == 0) return victors
 
         leaderboard[leaderboard.lastKey()]!!.forEach { victors.add(it) }
 
@@ -104,14 +104,14 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
     }
 
     private fun declareVictors(victors: Collection<BlackjackPlayer>) {
-        when{
+        when {
             victors.size > 1 -> {
 
                 var output = "Stalemate between players:"
-                victors.forEach{output+=" $it"}
+                victors.forEach { output += " $it" }
                 output += "."
                 println(output)
-        }
+            }
 
             victors.size == 1 -> println("Player ${victors.first()} wins!")
             else -> println("No victors")
@@ -119,19 +119,21 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
     }
 
     private fun determineIfRoundEnd() {
-        if(startingDeckSize == deck.getSize())
+        if (startingDeckSize == deck.getSize())
             gameState = GameState.ROUND_END
     }
 
     override fun addPlayer(playerName: String, playerType: Game.PlayerType) {
-        players.add(when(playerType){
-            Game.PlayerType.USER -> BlackjackUserPlayer(playerName,this)
-            Game.PlayerType.BASIC_AI -> BlackJackBasicAIPlayer(playerName, this)
-            Game.PlayerType.RANDOM_AI -> TODO()
-        })
+        players.add(
+            when (playerType) {
+                Game.PlayerType.USER -> BlackjackUserPlayer(playerName, this)
+                Game.PlayerType.BASIC_AI -> BlackJackBasicAIPlayer(playerName, this)
+                Game.PlayerType.RANDOM_AI -> TODO()
+            }
+        )
     }
 
-    private fun dealCardWithoutObserverNotification(player: BlackjackPlayer){
+    private fun dealCardWithoutObserverNotification(player: BlackjackPlayer) {
         player.giveCard(deck.drawCard())
     }
 
@@ -147,7 +149,7 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
     override fun getDisplayStringSet(): String {
         var outputString = "\n\nPlayer: $currentPlayer\nHand:\n"
 
-        currentPlayer.hand.forEach { outputString += "${it.rank} of ${it.suit}\n"}
+        currentPlayer.hand.forEach { outputString += "${it.rank} of ${it.suit}\n" }
 
         outputString += "\nScore: ${currentPlayer.getHandScore()}\n" +
                 "Command are \"hit\" and \"stand\"\n\n\n"
@@ -155,7 +157,7 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
         return outputString
     }
 
-    private val subscribers : ArrayList<Observer<Displayable>> = arrayListOf()
+    private val subscribers: ArrayList<Observer<Displayable>> = arrayListOf()
 
     override fun subscribe(observer: Observer<Displayable>) {
         subscribers.add(observer)
