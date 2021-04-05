@@ -20,4 +20,8 @@ class MutableDeck : Deck{
         cards.removeAt(0)
         return card
     }
+
+    override fun getSize(): Int {
+        return cards.size
+    }
 }
