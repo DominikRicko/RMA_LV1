@@ -1,12 +1,12 @@
 package blackjack
 
 import cards.Card
-import consoleGraphics.Displayable
 
-interface BlackjackPlayer : Displayable {
+interface BlackjackPlayer {
 
     val name : String
     val game : Blackjack
+    val hand : Collection<Card>
 
     fun getHandScore() : Int
     fun giveCard(card: Card)

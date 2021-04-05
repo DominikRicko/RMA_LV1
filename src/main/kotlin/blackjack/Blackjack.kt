@@ -113,21 +113,27 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
     }
 
     override fun getDisplayStringSet(): String {
-        var outputString = "Player: ${currentPlayer.toString()}\n" +
-                "Hand: "
+        var outputString = "Player: $currentPlayer\nHand: "
+
+        currentPlayer.hand.forEach { outputString += "${it.rank} of ${it.suit}\n"}
+
+        outputString += "\nScore: ${currentPlayer.getHandScore()}" +
+                "Command are \"hit\" and \"stand\"\n\n\n"
 
         return outputString
     }
 
+    private val subscribers : ArrayList<Observer<Displayable>> = arrayListOf()
+
     override fun subscribe(observer: Observer<Displayable>) {
-        TODO("Not yet implemented")
+        subscribers.add(observer)
     }
 
     override fun unsubscribe(observer: Observer<Displayable>) {
-        TODO("Not yet implemented")
+        subscribers.remove(observer)
     }
 
     override fun notifyObservers() {
-        TODO("Not yet implemented")
+        subscribers.forEach { it.update(this) }
     }
 }

@@ -4,7 +4,7 @@ import cards.Card
 
 class BlackjackUserPlayer(override val name: String, override val game: Blackjack) : BlackjackPlayer {
 
-    private val hand : ArrayList<Card> = arrayListOf()
+    override val hand : ArrayList<Card> = arrayListOf()
 
     override fun getHandScore(): Int {
 
@@ -53,10 +53,6 @@ class BlackjackUserPlayer(override val name: String, override val game: Blackjac
             else -> println("Could not process command.")
         }
 
-    }
-
-    override fun getDisplayStringSet(): String {
-        TODO("Not yet implemented")
     }
 
     private fun getUserInput(): String {
