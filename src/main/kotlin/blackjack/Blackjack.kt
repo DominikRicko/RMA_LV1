@@ -39,11 +39,9 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
 
             deck.shuffle()
 
-            startingDeckSize = deck.getSize()
-
             players.forEach {
-                dealCard(it)
-                dealCard(it)
+                dealCardWithoutObserverNotification(it)
+                dealCardWithoutObserverNotification(it)
             }
 
             val roundPlayers = arrayListOf<BlackjackPlayer>()
@@ -53,30 +51,37 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
 
             while(gameState != GameState.ROUND_END){
 
-                for(i in 0 until roundPlayers.size step 1){
+                startingDeckSize = deck.getSize()
+
+                var i = 0
+                while( i < roundPlayers.size){
 
                     currentPlayer = roundPlayers[i]
                     gameState = GameState.TURN_START
 
                     while(gameState != GameState.TURN_END){
 
+                        notifyObservers()
                         currentPlayer.processNextCommand()
 
                         if(currentPlayer.getHandScore() >= 21) {
 
                             roundPlayers.removeAt(i)
+                            i--
                             gameState = GameState.TURN_END
+
 
                         }
                     }
+                    i++
                 }
 
                 determineIfRoundEnd()
 
             }
 
-            val leaderboard = players.groupBy { it.getHandScore() }.toSortedMap()
-            declareVictors(leaderboard[leaderboard.lastKey()]!!)
+
+            declareVictors(determineVictors())
 
             players.forEach { player -> player.returnCards().forEach { card -> deck.addCard(card) } }
 
@@ -84,11 +89,33 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
 
     }
 
-    private fun declareVictors(victors: List<BlackjackPlayer>) {
-        if (victors.size > 1)
-            TODO("Stalemate")
-        else
-            TODO("Not yet implemented")
+    private fun determineVictors() : Collection<BlackjackPlayer>{
+
+        val leaderboard = players.filter{it.getHandScore() <= 21}.groupBy { it.getHandScore() }.toSortedMap()
+
+        val victors = arrayListOf<BlackjackPlayer>()
+
+        if(leaderboard.size == 0) return victors
+
+        leaderboard[leaderboard.lastKey()]!!.forEach { victors.add(it) }
+
+        return victors
+
+    }
+
+    private fun declareVictors(victors: Collection<BlackjackPlayer>) {
+        when{
+            victors.size > 1 -> {
+
+                var output = "Stalemate between players:"
+                victors.forEach{output+=" $it"}
+                output += "."
+                println(output)
+        }
+
+            victors.size == 1 -> println("Player ${victors.first()} wins!")
+            else -> println("No victors")
+        }
     }
 
     private fun determineIfRoundEnd() {
@@ -104,8 +131,13 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
         })
     }
 
-    fun dealCard(player: BlackjackPlayer) {
+    private fun dealCardWithoutObserverNotification(player: BlackjackPlayer){
         player.giveCard(deck.drawCard())
+    }
+
+    fun dealCard(player: BlackjackPlayer) {
+        dealCardWithoutObserverNotification(player)
+        notifyObservers()
     }
 
     fun endTurn() {
@@ -113,11 +145,11 @@ class Blackjack(private val rounds : Int) : Game, Observable<Displayable>, Displ
     }
 
     override fun getDisplayStringSet(): String {
-        var outputString = "Player: $currentPlayer\nHand: "
+        var outputString = "\n\nPlayer: $currentPlayer\nHand:\n"
 
         currentPlayer.hand.forEach { outputString += "${it.rank} of ${it.suit}\n"}
 
-        outputString += "\nScore: ${currentPlayer.getHandScore()}" +
+        outputString += "\nScore: ${currentPlayer.getHandScore()}\n" +
                 "Command are \"hit\" and \"stand\"\n\n\n"
 
         return outputString

@@ -11,6 +11,8 @@ fun instantTest(){
     game.addPlayer("Dominik", Game.PlayerType.USER)
     game.addPlayer("AI", Game.PlayerType.BASIC_AI)
 
+    game.subscribe(ConsolePrinter)
+
     game.start()
 }
 
