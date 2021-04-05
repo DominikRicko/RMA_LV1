@@ -1,8 +1,9 @@
-package blackjack
+package blackjack.player
 
+import blackjack.Blackjack
 import cards.Card
 
-class BlackjackUserPlayer(override val name: String, override val game: Blackjack) : BlackjackPlayer {
+class BlackJackBasicAIPlayer(override val name: String, override val game: Blackjack) : BlackjackPlayer {
 
     override val hand: ArrayList<Card> = arrayListOf()
 
@@ -47,18 +48,13 @@ class BlackjackUserPlayer(override val name: String, override val game: Blackjac
 
     override fun processNextCommand() {
 
-        when (getUserInput()) {
-            "hit" -> game.dealCard(this)
-            "stand" -> game.endTurn()
-            else -> println("Could not process command.")
-        }
+        val currentScore = getHandScore()
 
-    }
+        if (currentScore <= 16)
+            game.dealCard(this)
+        else
+            game.endTurn()
 
-    private fun getUserInput(): String {
-        val input = (readLine()?.split(' ')) ?: return ""
-
-        return input[0]
     }
 
     override fun toString(): String {

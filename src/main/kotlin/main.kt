@@ -5,7 +5,7 @@ import yamb.Yamb
 val playerNames = arrayListOf<String>()
 val playerTypes = arrayListOf<Game.PlayerType>()
 
-fun instantTest() {
+fun instantTestBlackjack() {
     val game = Blackjack(4)
 
     game.addPlayer("Dominik", Game.PlayerType.USER)
@@ -16,11 +16,23 @@ fun instantTest() {
     game.start()
 }
 
+fun instantTestYamb(){
+    val game = Yamb(4)
+
+    game.addPlayer("Dominik", Game.PlayerType.USER)
+    game.addPlayer("AI", Game.PlayerType.RANDOM_AI)
+
+    game.subscribe(ConsolePrinter)
+
+    game.start()
+}
+
 fun main() {
 
     displayHelp()
 
-    instantTest()
+    //instantTestYamb()
+    instantTestBlackjack()
 
     while (true) {
         val input = readLine()?.split(' ') ?: continue

@@ -1,5 +1,6 @@
-package blackjack
+package blackjack.player
 
+import blackjack.Blackjack
 import cards.Card
 
 interface BlackjackPlayer {
