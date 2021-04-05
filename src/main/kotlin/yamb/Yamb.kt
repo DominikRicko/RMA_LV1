@@ -122,6 +122,7 @@ class Yamb(private val rounds: Int) : Game, Observable<Displayable>, Displayable
             when (playerType) {
                 Game.PlayerType.USER -> YambUserPlayer(playerName, this)
                 Game.PlayerType.RANDOM_AI -> YambRandomAIPlayer(this)
+                Game.PlayerType.BASIC_AI -> TODO()
             }
         )
 

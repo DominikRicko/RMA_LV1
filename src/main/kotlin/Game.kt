@@ -4,6 +4,7 @@ interface Game {
 
     enum class PlayerType {
         RANDOM_AI,
-        USER
+        USER,
+        BASIC_AI
     }
 }
